@@ -63,13 +63,15 @@ if [ ! -d $PROJECT ]; then
 
 	if [ $CURRENT_OS == "ANDROID" ]; then
 		echo "${OpenColor}${Green}* Adding Android platform... ${CloseColor}"
-		cordova platforms add android
+		cordova platforms rm android
+		cordova platforms add android@6
 		checkOK
 	fi
 
 	if [ $CURRENT_OS == "IOS" ]; then
 		echo "${OpenColor}${Green}* Adding IOS platform... ${CloseColor}"
-		cordova platforms add ios
+		cordova platforms rm apache/cordova-ios
+		cordova platforms add apache/cordova-ios
 		checkOK
 	fi
 
@@ -106,7 +108,7 @@ if [ ! -d $PROJECT ]; then
 	cordova plugin add cordova-plugin-x-toast && cordova prepare
 	checkOK
 
-	cordova plugin add https://github.com/VersoSolutions/CordovaClipboard
+	cordova plugin add cruzlauroiii/CordovaClipboard
 	checkOK
 
 	cordova plugin add https://github.com/EddyVerbruggen/SocialSharing-PhoneGap-Plugin.git && cordova prepare
@@ -146,10 +148,10 @@ if [ ! -d $PROJECT ]; then
 	checkOK
 
 	if [ $CURRENT_OS == "ANDROID" ]; then
-	cordova plugin add https://github.com/phonegap-build/PushPlugin.git
+	cordova plugin add cruzlauroiii/PushPlugin.git
 	checkOK
 
-	cordova plugin add https://github.com/8zrealestate/android-referrer-plugin
+	cordova plugin add cruzlauroiii/android-referrer-plugin
 	checkOK
 	fi
 	

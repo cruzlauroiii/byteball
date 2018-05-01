@@ -1,5 +1,22 @@
 VERSION=`cut -d '"' -f2 $BUILDDIR/../version.js`
 
+scratch:
+	git clean -dfx
+	rm -rf ~/Library/Application\ Support/byteball
+	export npm_config_target=0.24.4
+	export npm_config_arch=x64
+	export npm_config_target_arch=x64
+	export npm_config_runtime=node-webkit
+	export npm_config_build_from_source=true
+	export npm_config_node_gyp=$(which nw-gyp)
+	npm install -g bower
+	npm install -g grunt-cli
+	npm install -g nw-gyp
+	npm install -g node-pre-gyp
+	bower install
+	npm install
+	grunt
+	~/Downloads/nwjs-v0.24.4-osx-x64/nwjs.app/Contents/MacOS/nwjs .
 
 cordova-base:
 	grunt dist-mobile
@@ -35,9 +52,10 @@ ios-debug:
 	open ../byteballbuilds/project-IOS/platforms/ios/Byteball.xcodeproj
 
 android-prod:
+	npm -g i apache/cordova-cli
 	cordova/build.sh ANDROID --clear
 #	cp ./etc/beep.ogg ./cordova/project/plugins/phonegap-plugin-barcodescanner/src/android/LibraryProject/res/raw/beep.ogg
-	cd ../byteballbuilds/project-ANDROID && cordova run android --device
+	cd ../byteballbuilds/project-ANDROID && cordova build android --release
 	
 android-prod-fast:
 	cordova/build.sh ANDROID
@@ -46,7 +64,7 @@ android-prod-fast:
 android-debug:
 	cordova/build.sh ANDROID --dbgjs --clear
 #	cp ./etc/beep.ogg ./cordova/project/plugins/phonegap-plugin-barcodescanner/src/android/LibraryProject/res/raw/beep.ogg
-	cd ../byteballbuilds/project-ANDROID && cordova run android --device
+	cd ../byteballbuilds/project-ANDROID && cordova build android
 
 android-debug-fast:
 	cordova/build.sh ANDROID --dbgjs
